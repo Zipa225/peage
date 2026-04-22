@@ -23,7 +23,7 @@ class GuichetController extends Controller
      */
     public function create()
     {
-        //
+        return view("guichet.create");
     }
 
     /**
@@ -31,7 +31,21 @@ class GuichetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->validate([
+            "code"=>'required',
+            "statut"=>'required',
+        ]);
+
+        $message=[
+            "code.required"=>'Le champ code est obligatoire',
+            "statut.required"=>'Le champ statut est obligatoire',
+        ];
+
+        Guichet::create($data);
+
+        return view('guichet.index');
+
+
     }
 
     /**
@@ -39,7 +53,8 @@ class GuichetController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data=Guichet::findOrFail($id);
+        return view("guichet.show",compact('data'));
     }
 
     /**
@@ -47,7 +62,8 @@ class GuichetController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data=Guichet::findOrFail($id);
+        return view("guichet.edit",compact('data'));
     }
 
     /**
@@ -55,7 +71,19 @@ class GuichetController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item=Guichet::findOrFail($id);
+        $datas=$request->validate([
+            'code'=>'required',
+            'statut'=>'required',
+        ]);
+        $message=[
+            'code.required'=>'Le champ code est obligatoire',
+            'statut.required'=>'Le champ statut est obligatoire',
+        ];
+
+        $item->update($datas);
+        return view("guichet.show",compact('datas'));
+
     }
 
     /**
@@ -63,6 +91,7 @@ class GuichetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data=Guichet::findOrFail($id);
+        $data->delete();
     }
 }
