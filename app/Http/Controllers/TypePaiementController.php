@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TypePaiement;
 use Illuminate\Http\Request;
 
 class TypePaiementController extends Controller
@@ -11,7 +12,8 @@ class TypePaiementController extends Controller
      */
     public function index()
     {
-        //
+        $types = TypePaiement::all();
+        return view('admin.types-paiements.index', compact('types'));
     }
 
     /**
@@ -19,7 +21,7 @@ class TypePaiementController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.types-paiements.create');
     }
 
     /**
@@ -27,7 +29,18 @@ class TypePaiementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'libelle' => 'required|string|max:50',
+        ], [
+            'libelle.required' => 'Le libellé du type de paiement est obligatoire.',
+            'libelle.string' => 'Le libellé doit être une chaîne de caractères.',
+            'libelle.max' => 'Le libellé ne doit pas dépasser 50 caractères.',
+        ]);
+
+        TypePaiement::create($request->all());
+
+        return redirect()->route('admin.types-paiements.index')
+            ->with('success', 'Type de paiement créé avec succès.');
     }
 
     /**
@@ -35,7 +48,8 @@ class TypePaiementController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $type = TypePaiement::findOrFail($id);
+        return view('admin.types-paiements.show', compact('type'));
     }
 
     /**
@@ -43,7 +57,8 @@ class TypePaiementController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $type = TypePaiement::findOrFail($id);
+        return view('admin.types-paiements.edit', compact('type'));
     }
 
     /**
@@ -51,7 +66,19 @@ class TypePaiementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'libelle' => 'required|string|max:50',
+        ], [
+            'libelle.required' => 'Le libellé du type de paiement est obligatoire.',
+            'libelle.string' => 'Le libellé doit être une chaîne de caractères.',
+            'libelle.max' => 'Le libellé ne doit pas dépasser 50 caractères.',
+        ]);
+
+        $type = TypePaiement::findOrFail($id);
+        $type->update($request->all());
+
+        return redirect()->route('admin.types-paiements.index')
+            ->with('success', 'Type de paiement mis à jour avec succès.');
     }
 
     /**
@@ -59,6 +86,10 @@ class TypePaiementController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $type = TypePaiement::findOrFail($id);
+        $type->delete();
+
+        return redirect()->route('admin.types-paiements.index')
+            ->with('success', 'Type de paiement supprimé avec succès.');
     }
 }

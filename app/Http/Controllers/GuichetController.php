@@ -12,10 +12,8 @@ class GuichetController extends Controller
      */
     public function index()
     {
-        $datas=[
-            Guichet::all(),
-        ];
-        return view("guichet.index",compact('datas'));
+        $guichets = Guichet::all();
+        return view('admin.guichets.index', compact('guichets'));
     }
 
     /**
@@ -23,7 +21,8 @@ class GuichetController extends Controller
      */
     public function create()
     {
-        return view("guichet.create");
+        return view('admin.guichets.create');
+
     }
 
     /**
@@ -31,20 +30,22 @@ class GuichetController extends Controller
      */
     public function store(Request $request)
     {
-        $data=$request->validate([
-            "code"=>'required',
-            "statut"=>'required',
+
+        $datas=$request->validate([
+            'code' => 'required|string|max:50',
+            'statut' => 'nullable|string|max:50',
+        ], [
+            'code.required' => 'Le code du guichet est obligatoire.',
+            'code.string' => 'Le code doit être une chaîne de caractères.',
+            'code.max' => 'Le code ne doit pas dépasser 50 caractères.',
+            'statut.string' => 'Le statut doit être une chaîne de caractères.',
+            'statut.max' => 'Le statut ne doit pas dépasser 50 caractères.',
         ]);
 
-        $message=[
-            "code.required"=>'Le champ code est obligatoire',
-            "statut.required"=>'Le champ statut est obligatoire',
-        ];
+        Guichet::create($datas);
 
-        Guichet::create($data);
-
-        return view('guichet.index');
-
+        return redirect()->route('admin.guichets.index')
+            ->with('success', 'Guichet créé avec succès.');
 
     }
 
@@ -53,8 +54,10 @@ class GuichetController extends Controller
      */
     public function show(string $id)
     {
-        $data=Guichet::findOrFail($id);
-        return view("guichet.show",compact('data'));
+
+        $guichet = Guichet::findOrFail($id);
+        return view('admin.guichets.show', compact('guichet'));
+
     }
 
     /**
@@ -62,8 +65,9 @@ class GuichetController extends Controller
      */
     public function edit(string $id)
     {
-        $data=Guichet::findOrFail($id);
-        return view("guichet.edit",compact('data'));
+        $guichet = Guichet::findOrFail($id);
+        return view('admin.guichets.edit', compact('guichet'));
+
     }
 
     /**
@@ -71,18 +75,23 @@ class GuichetController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $item=Guichet::findOrFail($id);
-        $datas=$request->validate([
-            'code'=>'required',
-            'statut'=>'required',
-        ]);
-        $message=[
-            'code.required'=>'Le champ code est obligatoire',
-            'statut.required'=>'Le champ statut est obligatoire',
-        ];
 
-        $item->update($datas);
-        return view("guichet.show",compact('datas'));
+        $datas=$request->validate([
+            'code' => 'required|string|max:50',
+            'statut' => 'nullable|string|max:50',
+        ], [
+            'code.required' => 'Le code du guichet est obligatoire.',
+            'code.string' => 'Le code doit être une chaîne de caractères.',
+            'code.max' => 'Le code ne doit pas dépasser 50 caractères.',
+            'statut.string' => 'Le statut doit être une chaîne de caractères.',
+            'statut.max' => 'Le statut ne doit pas dépasser 50 caractères.',
+        ]);
+
+        $guichet = Guichet::findOrFail($id);
+        $guichet->update($datas);
+
+        return redirect()->route('admin.guichets.index')
+            ->with('success', 'Guichet mis à jour avec succès.');
 
     }
 
@@ -91,7 +100,12 @@ class GuichetController extends Controller
      */
     public function destroy(string $id)
     {
-        $data=Guichet::findOrFail($id);
-        $data->delete();
+
+        $guichet = Guichet::findOrFail($id);
+        $guichet->delete();
+
+        return redirect()->route('admin.guichets.index')
+            ->with('success', 'Guichet supprimé avec succès.');
+
     }
 }
