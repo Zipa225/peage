@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin-pont a peage</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+    <link rel="stylesheet" href="../Style/style.css">
+</head>
+<body>
+    
+    <div class="container">
+
+    <!-- SIDEBAR -->
+    <aside>
+        <div class="top">
+            <div class="logo">
+                <img src="../images/pngwing.com.png">
+                <h2>S <span class="danger">M</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+        </div>
+
+        <div class="sidebar">
+
+            <a href="../index.html">
+                <span class="material-icons-sharp">dashboard</span>
+                <h3>Dashboard</h3>
+            </a>
+
+            <a href="guichet.html">
+                <span class="material-icons-sharp">account_balance_wallet</span>
+                <h3>Guichet</h3>
+            </a>
+
+            <a href="analyse.html">
+                <span class="material-icons-sharp">bar_chart</span>
+                <h3>Analyse</h3>
+            </a>
+
+            <a href="message.html">
+                <span class="material-icons-sharp">chat</span>
+                <h3>Messages</h3>
+                <div class="message-count">26</div>
+            </a>
+
+
+            <a href="admin.html" class="active">
+                <span class="material-icons-sharp">supervisor_account</span>
+                <h3>Admin</h3>
+            </a>
+
+            <a href="parametre.html">
+                <span class="material-icons-sharp">settings</span>
+                <h3>Paramètres</h3>
+            </a>
+            <br><br><br><br><br>
+
+            <a href="#">
+                <span class="material-icons-sharp">logout</span>
+                <h3>Logout</h3>
+            </a>
+
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+
+        <h1>Panneau Administrateur</h1>
+
+        <div class="date">
+            <input type="date">
+        </div>
+
+        <!-- STATS ADMIN -->
+        <div class="insights">
+
+            <div class="sale">
+                <span class="material-icons-sharp">groups</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Utilisateurs</h3>
+                        <h1>48</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="income">
+                <span class="material-icons-sharp">verified_user</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Agents actifs</h3>
+                        <h1>32</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dysfunction">
+                <span class="material-icons-sharp">error</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Alertes système</h3>
+                        <h1>5</h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TABLE UTILISATEURS -->
+        <div class="passages-recents">
+
+            <h2>Gestion des utilisateurs</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                        <th>Dernière connexion</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Ivan Admin</td>
+                        <td>Super Admin</td>
+                        <td class="success">Actif</td>
+                        <td>Aujourd'hui</td>
+                    </tr>
+
+                    <tr>
+                        <td>Armel Gouibi</td>
+                        <td>Agent</td>
+                        <td class="success">Actif</td>
+                        <td>Hier</td>
+                    </tr>
+
+                    <tr>
+                        <td>Jean Kouassi</td>
+                        <td>Agent</td>
+                        <td class="danger">Suspendu</td>
+                        <td>3 jours</td>
+                    </tr>
+
+                    <tr>
+                        <td>Yao Koffi</td>
+                        <td>Agent</td>
+                        <td class="success">Actif</td>
+                        <td>Ce matin</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </main>
+
+    <!-- RIGHT PANEL -->
+    <div class="right">
+
+        <div class="top">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">menu</span>
+            </button>
+            <div class="theme-toggler">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
+            </div>
+            <div class="profile">
+                <div class="info">
+                    <p>Bonjour, <b>Ivan</b></p>
+                    <small class="text-muted">Admin</small>
+                </div>
+                <div class="profil-photo">
+                    <img src="./images/Admin_Profil.jpeg">
+                </div>
+            </div>
+        </div>
+
+        <!-- SYSTÈME -->
+        <div class="recent-updates">
+
+            <h2>Contrôle système</h2>
+
+            <div class="update">
+                <p>Serveur principal : <b>OK</b></p>
+                <small class="text-muted">Stable</small>
+            </div>
+
+            <div class="update">
+                <p>Sécurité : <b>Active</b></p>
+                <small class="text-muted">Protégé</small>
+            </div>
+
+            <div class="update">
+                <p>Base de données : <b>Connectée</b></p>
+                <small class="text-muted">Sans erreur</small>
+            </div>
+
+        </div>
+
+        <!-- ACTIONS ADMIN -->
+        <div class="sales-analytics">
+
+            <h2>Actions rapides</h2>
+
+            <div class="item online">
+                <div class="icon">
+                    <span class="material-icons-sharp">person_add</span>
+                </div>
+
+                <div class="right">
+                    <div class="info">
+                        <h3>Ajouter agent</h3>
+                        <small class="text-muted">Créer compte</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item offline">
+                <div class="icon">
+                    <span class="material-icons-sharp">block</span>
+                </div>
+
+                <div class="right">
+                    <div class="info">
+                        <h3>Suspendre utilisateur</h3>
+                        <small class="text-muted">Sécurité</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item online">
+                <div class="icon">
+                    <span class="material-icons-sharp">backup</span>
+                </div>
+
+                <div class="right">
+                    <div class="info">
+                        <h3>Sauvegarde</h3>
+                        <small class="text-muted">Base de données</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

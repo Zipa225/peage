@@ -15,6 +15,9 @@ class User extends Authenticatable
 
     protected $table = 'user';
 
+    // La table 'user' n'a pas de colonne 'updated_at'
+    public $timestamps = false;
+
     protected $fillable = [
         'nom',
         'prenoms',
@@ -43,5 +46,13 @@ class User extends Authenticatable
     public function paiements()
     {
         return $this->hasMany(Paiement::class, 'user_id');
+    }
+
+    /**
+     * Retourne le nom complet de l'utilisateur.
+     */
+    public function getNomCompletAttribute(): string
+    {
+        return $this->prenoms . ' ' . $this->nom;
     }
 }

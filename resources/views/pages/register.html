@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un compte - Pont a peage</title>
+    <!--Material cdn-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+    <link rel="stylesheet" href="../Style/style.css">
+    <link rel="stylesheet" href="../Style/login.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <br><br><br><br><br><br><br><br><br><br><br>
+        <div class="login-content">
+            <div class="logo">
+                <img src="../images/pngwing.com.png" alt="Logo">
+                <h2>S <span class="danger">M</span></h2>
+            </div>
+            <h2>Créer un compte</h2>
+            <p class="text-muted">Rejoignez-nous dès aujourd'hui</p>
+            
+            <form action="login.html">
+                <div class="input-group">
+                    <span class="material-icons-sharp">badge</span>
+                    <input type="text" placeholder="Nom complet" required>
+                </div>
+                <div class="input-group">
+                    <span class="material-icons-sharp">email</span>
+                    <input type="email" placeholder="Adresse Email" required>
+                </div>
+                <div class="input-group">
+                    <span class="material-icons-sharp">person</span>
+                    <input type="text" placeholder="Nom d'utilisateur" required>
+                </div>
+                <div class="input-group">
+                    <span class="material-icons-sharp">lock</span>
+                    <input type="password" placeholder="Mot de passe" required>
+                </div>
+                <div class="input-group">
+                    <span class="material-icons-sharp">lock_outline</span>
+                    <input type="password" placeholder="Confirmer le mot de passe" required>
+                </div>
+                
+                <button type="submit" class="btn-login">S'inscrire</button>
+
+                <div class="register-link">
+                    <p>Vous avez déjà un compte ? <a href="login.html" class="primary">Se connecter</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Message-pont a peage</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+        <link rel="stylesheet" href="../Style/style.css">
+    </head>
+    <body>
+
+        <div class="container">
+
+    <!-- SIDEBAR -->
+    <aside>
+        <div class="top">
+            <div class="logo">
+                <img src="../images/pngwing.com.png">
+                <h2>S <span class="danger">M</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+        </div>
+
+        <div class="sidebar">
+
+            <a href="../index.html">
+                <span class="material-icons-sharp">dashboard</span>
+                <h3>Dashboard</h3>
+            </a>
+
+            <a href="messages.html" class="active">
+                <span class="material-icons-sharp">chat</span>
+                <h3>Messages</h3>
+            </a>
+
+            <a href="admin.html" >
+                <span class="material-icons-sharp">supervisor_account</span>
+                <h3>Admin</h3>
+            </a>
+
+            <br><br><br><br><br><br>
+            <a href="#">
+                <span class="material-icons-sharp">logout</span>
+                <h3>Logout</h3>
+            </a>
+
+        </div>
+    </aside>
+    <!-- MAIN -->
+    <main>
+
+        <h1>Messages</h1>
+
+        <div class="insights">
+
+            <div class="sale">
+                <span class="material-icons-sharp">chat</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Total</h3>
+                        <h1>26</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="income">
+                <span class="material-icons-sharp">mark_email_unread</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Non lus</h3>
+                        <h1>8</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dysfunction">
+                <span class="material-icons-sharp">done_all</span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Lus</h3>
+                        <h1>18</h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="passages-recents">
+            <h2>Boîte de réception</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Expéditeur</th>
+                        <th>Message</th>
+                        <th>Statut</th>
+                        <th>Heure</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr><td>Agent A1</td><td>Péage OK</td><td class="success">Lu</td><td>08:10</td></tr>
+                    <tr><td>Agent A2</td><td>Panne guichet</td><td class="danger">Non lu</td><td>08:30</td></tr>
+                    <tr><td>Admin</td><td>Rapport</td><td class="success">Lu</td><td>09:00</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <div class="right">
+
+    <!-- TOP PROFIL -->
+    <div class="top">
+        <div class="profile">
+            <div class="info">
+                <p>Bonjour, <b>Ivan</b></p>
+                <small class="text-muted">Admin système</small>
+            </div>
+            <div class="profil-photo">
+                <img src="../images/Admin_Profil.jpeg">
+            </div>
+        </div>
+    </div>
+
+    <!-- RÉSUMÉ RAPIDE -->
+    <div class="recent-updates">
+        <h2>Résumé général</h2>
+
+        <div class="updates">
+
+            <div>
+                <div>
+                    <p><b>Statut système :</b> Opérationnel</p>
+                    <small class="text-muted">Aucun incident critique</small>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <p><b>Activité du jour :</b> Normale</p>
+                    <small class="text-muted">Flux stable</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- INDICATEURS -->
+    <div class="sales-analytics">
+
+        <h2>Indicateurs clés</h2>
+
+        <!-- PERFORMANCE -->
+        <div class="item online">
+            <div class="icon">
+                <span class="material-icons-sharp">trending_up</span>
+            </div>
+
+            <div>
+                <div>
+                    <h3>Performance</h3>
+                    <small class="text-muted">Système global</small>
+                </div>
+                <h3 class="success">92%</h3>
+            </div>
+        </div>
+
+        <!-- ALERTES -->
+        <div class="item offline">
+            <div class="icon">
+                <span class="material-icons-sharp">warning</span>
+            </div>
+
+            <div>
+                <div>
+                    <h3>Alertes</h3>
+                    <small class="text-muted">Dysfonctionnements</small>
+                </div>
+                <h3 class="danger">15</h3>
+            </div>
+        </div>
+
+        <!-- REVENUS -->
+        <div class="item online">
+            <div class="icon">
+                <span class="material-icons-sharp">payments</span>
+            </div>
+
+            <div class="right">
+                <div>
+                    <h3>Revenus</h3>
+                    <small class="text-muted">Cette semaine</small>
+                </div>
+                <h3>2.5M FCFA</h3>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+</div>
+
+    </body>
+</html>

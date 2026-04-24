@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pont a peage</title>
+    <!--Material cdn-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+    <!--Style-->
+    <link rel="stylesheet" href="./Style/style.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+        <div class="top">
+            <div class="logo">
+                <img src="../images/pngwing.com.png">
+                <h2>S <span class="danger">M</span></h2>
+            </div>
+        </div>
+
+        <div class="sidebar">
+
+            <a href="index.html" class="active">
+                <span class="material-icons-sharp">dashboard</span>
+                <h3>Dashboard</h3>
+            </a>
+
+            <a href="./pages/guichet.html">
+                <span class="material-icons-sharp">account_balance_wallet</span>
+                <h3>Guichet</h3>
+            </a>
+
+            <a href="./pages/analyse.html">
+                <span class="material-icons-sharp">bar_chart</span>
+                <h3>Analyse</h3>
+            </a>
+
+            <a href="./pages/admin.html">
+                <span class="material-icons-sharp">supervisor_account</span>
+                <h3>Admin</h3>
+            </a>
+
+            <a href="./pages/parametre.html">
+                <span class="material-icons-sharp">settings</span>
+                <h3>Paramètres</h3>
+            </a>
+            <br><br><br><br><br><br>
+            <a href="#">
+                <span class="material-icons-sharp">logout</span>
+                <h3>Logout</h3>
+            </a>
+
+        </div>
+    </aside>
+
+        <main>
+            <h1>Dashboard</h1>
+            <div class="date">
+                <input type="date">
+            </div>
+            <div class="insights">
+                <div class="sale">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle" id="left">
+                        <div class="left">
+                            <h3>Total clients</h3>
+                            <h1>13200 personnes</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>32%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <small class="text-muted">Apres 24 hours</small>
+                </div>
+                <!--END SALE-->
+                <div class="dysfunction">
+                    <span class="material-icons-sharp">bar_chart</span>
+                    <div class="middle" id="middle">
+                        <div class="left">
+                            <h3>Total dysfonctionnement observer</h3>
+                            <h1>8</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>3%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <small class="text-muted">Apres 24 hours</small>
+                </div>
+                <!--END DYSFUNCTION-->
+                <div class="income">
+                    <span class="material-icons-sharp">stacked_line_chart</span>
+                    <div class="middle" id="right">
+                        <div class="left">
+                            <h3>Total revenu</h3>
+                            <h1>565000F CFA</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>56%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <small class="text-muted">Apres 24 hours</small>
+                </div>
+                <!--END INCOME-->
+            </div><br><br>
+                <!--END INSIGHTs-->
+
+            <div class="passages-recents">
+                <h2>Passage recents</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categorie</th>
+                            <th>tarification</th>
+                            <th>Matricule</th>
+                            <th>Guichet</th>
+                            <th class="warning">Amende</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="warning"><span class="material-icons-sharp">local_shipping</span></td>
+                            <td>3000F CFA</td>
+                            <td class="warning">AR-562-AY</td>
+                            <td>A5</td>
+                            <td class="warning">1</td>
+                        </tr>
+                        <tr>
+                            <td class="warning"><span class="material-icons-sharp">directions_car</span></td>
+                            <td>500F CFA</td>
+                            <td class="warning">AA-162-EY</td>
+                            <td>A1</td>
+                            <td class="warning">3</td>
+                        </tr>
+                        <tr>
+                            <td><span class="material-icons-sharp">motorcycle</span></td>
+                            <td>500F CFA</td>
+                            <td>AA-558-BB</td>
+                            <td>A2</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td class="danger"><span class="material-icons-sharp">local_shipping</span></td>
+                            <td>3000F CFA</td>
+                            <td class="danger">AR-562-AY</td>
+                            <td>A5</td>
+                            <td class="danger">11</td>
+                        </tr>
+                        <tr>
+                            <td class="warning"><span class="material-icons-sharp">directions_car</span></td>
+                            <td>1500F CFA</td>
+                            <td class="warning">BR-262-AY</td>
+                            <td>A5</td>
+                            <td class="warning">5</td>
+                        </tr>
+                        <tr>
+                            <td><span class="material-icons-sharp">motorcycle</span></td>
+                            <td>500F CFA</td>
+                            <td>RT-502-AY</td>
+                            <td>A2</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="#">Tout afficher</a>
+            </div>
+        </main>
+
+        <!--END OF MAIN-->
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Bonjour, <b>Ivan</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profil-photo">
+                        <img src="./images/Admin_Profil.jpeg">
+                    </div>
+                </div>
+            </div>
+
+            <!--END OF TOP-->
+
+            <div class="recent-updates">
+                <h2>Mise à jour récente</h2>
+                <div class="updates">
+                    <div class="update">
+                        <div class="profil-photo">
+                            <img src="./images/Profil.jpeg">
+                        </div>
+                        <div class="message">
+                            <p><b>Armel Gouibi</b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, incidunt!</p>
+                            <small class="text-muted">il ya 2 jours</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profil-photo">
+                            <img src="./images/profilutilise.jpeg">
+                        </div>
+                        <div class="message">
+                            <p><b>Armel Gouibi</b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, incidunt!</p>
+                            <small class="text-muted">il ya 2 semaine</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profil-photo">
+                            <img src="./images/PProfil.webp">
+                        </div>
+                        <div class="message">
+                            <p><b>Armel Gouibi</b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, incidunt!</p>
+                            <small class="text-muted">il ya 5 heures</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--ENDE OF RECENT UPDATES-->
+            <div class="sales-analytics">
+                <h2>Analyse des dysfonctionnements</h2>
+                <div class="item online">
+                    <div class="icon">
+                        <span class="material-icons-sharp">sync_problem</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>SURCHAUFFE</h3>
+                            <small class="text-muted">Apres 24 heures</small>
+                        </div>
+                        <h5 class="warning">2%</h5>
+                        <h3>10</h3>
+                    </div>
+                </div>
+                <div class="item add-product">
+                    <div>
+                        <span class="material-icons-sharp">add</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./javascript/index.JS"></script>
+</body>
+</html>
