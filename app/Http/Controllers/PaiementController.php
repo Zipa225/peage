@@ -49,13 +49,26 @@ class PaiementController extends Controller
             'categorie_vehicule_id' => 'required|exists:categorie_vehicule,id',
             'type_paiement_id' => 'required|exists:type_paiement,id',
             'guichet_id' => 'required|exists:guichet,id',
-            'user_id' => 'required|exists:user,id',
+            'user_id' => 'nullable|exists:user,id',
             'statut' => 'nullable|string|max:50',
         ]);
 
-        $paiement = Paiement::create($request->all());
+        $data = [
+            'date_paiement' => now(),
+            'montant' => $request->montant,
+            'immatriculation' => $request->immatriculation,
+            'categorie_vehicule_id' => $request->categorie_vehicule_id,
+            'type_paiement_id' => $request->type_paiement_id,
+            'guichet_id' => $request->guichet_id,
+            'user_id' => 1,
+            'statut' => $request->statut,
+        ];
 
-        return redirect()->route('admin.paiements.show', $paiement->id)
+        $paiement = Paiement::create($data);
+
+        
+
+        return redirect()->route('admin.paiements.show', ['paiement' => $paiement->id, 'print' => 1])
             ->with('success', 'Paiement enregistré avec succès.')
             ->with('print', true);
     }

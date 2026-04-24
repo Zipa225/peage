@@ -116,6 +116,16 @@
                 </div>
             @endif
 
+            @if($errors->any())
+                <div class="alert" style="background: var(--color-danger); color: white;">
+                    <ul style="list-style: none;">
+                        @foreach($errors->all() as $error)
+                            <li><span class="material-icons-sharp" style="font-size: 1rem;">error</span> {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="content-wrapper">
                 @yield('content')
             </div>

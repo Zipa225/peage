@@ -141,13 +141,14 @@
     <a href="{{ route('admin.paiements.create') }}" style="margin-left: 1rem; color: var(--color-light); font-weight: 600;">Nouveau passage</a>
 </div>
 
-@if(session('print'))
+@if(session('print') || request('print'))
 <script>
-    window.onload = function() {
+    
+    setTimeout(function() {
         window.print();
-        // Optionnel : rediriger après impression
-        // setTimeout(function() { window.location.href = "{{ route('admin.paiements.create') }}"; }, 2000);
-    }
+    }, 500);
+
+    
 </script>
 @endif
 
