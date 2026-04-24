@@ -20,7 +20,7 @@
 
                     <div style="margin-bottom: 1rem;">
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Catégorie de véhicule</label>
-                        <select name="categorie_vehicule_id" required style="width: 100%; padding: 0.8rem; border-radius: var(--border-radius-1); border: 2px solid var(--color-info-light); background: var(--color-primary); color: var(--color-dark);">
+                        <select name="categorie_vehicule_id" id="categorie_vehicule_id" required style="width: 100%; padding: 0.8rem; border-radius: var(--border-radius-1); border: 2px solid var(--color-info-light); background: var(--color-primary); color: var(--color-dark);">
                             <option value="">Sélectionner une catégorie</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}">{{ $cat->libelle }}</option>
@@ -29,9 +29,28 @@
                     </div>
 
                     <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Montant encaissé (F CFA)</label>
-                        <input type="number" name="montant" required style="width: 100%; padding: 0.8rem; border-radius: var(--border-radius-1); border: 2px solid var(--color-info-light); background: var(--color-primary); color: var(--color-dark);">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Montant encaissé (F CFA) - <small>Auto</small></label>
+                        <input type="number" name="montant" id="montant" required readonly style="width: 100%; padding: 0.8rem; border-radius: var(--border-radius-1); border: 2px solid var(--color-info-light); background: #f0f0f0; color: var(--color-dark); cursor: not-allowed;">
                     </div>
+
+                    <script>
+                        const tarifs = {
+                            @foreach($tarifs as $tarif)
+                                "{{ $tarif->categorie_vehicule_id }}": {{ $tarif->montant }},
+                            @endforeach
+                        };
+
+                        document.getElementById('categorie_vehicule_id').addEventListener('change', function() {
+                            const catId = this.value;
+                            const montantInput = document.getElementById('montant');
+                            
+                            if (tarifs[catId]) {
+                                montantInput.value = tarifs[catId];
+                            } else {
+                                montantInput.value = "";
+                            }
+                        });
+                    </script>
 
                     <div style="margin-bottom: 1rem;">
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Type de paiement</label>

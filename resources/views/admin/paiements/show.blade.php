@@ -1,64 +1,154 @@
 @extends('layouts.admin')
 
-@section('title', 'Détails Paiement')
+@section('title', 'Reçu de Paiement')
 
 @section('page-title')
-    <h1>Reçu de Paiement #{{ $paiement->id }}</h1>
+    <h1>Reçu de Paiement</h1>
 @endsection
 
 @section('content')
-    <div class="passages-recents form-centered" style="margin-top: 1rem;">
-        <div style="background: var(--color-white); padding: 2rem; border-radius: var(--border-radius-2); box-shadow: var(--box-shadow); position: relative; overflow: hidden;">
-            
-            {{-- Filigrane pour l'aspect "Reçu" --}}
-            <div style="position: absolute; top: -20px; right: -20px; opacity: 0.1;">
-                <span class="material-icons-sharp" style="font-size: 15rem; color: var(--color-success);">receipt_long</span>
-            </div>
+<style>
+    @media print {
+        aside, .main-header, .btn-no-print {
+            display: none !important;
+        }
+        .container {
+            display: block;
+            width: 100%;
+        }
+        main {
+            margin: 0;
+            padding: 0;
+        }
+        .receipt-card {
+            box-shadow: none !important;
+            border: 1px solid #eee;
+            width: 80mm; /* Largeur standard ticket thermique */
+            margin: 0 auto;
+        }
+    }
 
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="color: var(--color-light);">PÉAGE MUNICIPAL</h2>
-                <p class="text-muted">Reçu de passage sécurisé</p>
-                <hr style="border: 0; border-top: 1px dashed var(--color-info-light); margin: 1.5rem 0;">
-            </div>
+    .receipt-card {
+        background: #fff;
+        width: 100%;
+        max-width: 450px;
+        margin: 1rem auto;
+        padding: 2rem;
+        border-radius: var(--border-radius-2);
+        box-shadow: var(--box-shadow);
+        font-family: 'Courier New', Courier, monospace; /* Police style ticket */
+        color: #000;
+    }
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div>
-                    <small class="text-muted">Date & Heure</small>
-                    <p><b>{{ \Carbon\Carbon::parse($paiement->date_paiement)->format('d/m/Y H:i:s') }}</b></p>
-                </div>
-                <div>
-                    <small class="text-muted">Guichet</small>
-                    <p><b>{{ $paiement->guichet->code ?? 'N/A' }}</b></p>
-                </div>
-                <div>
-                    <small class="text-muted">Véhicule (Matricule)</small>
-                    <p class="warning"><b>{{ $paiement->immatriculation ?? 'NON RENSEIGNÉ' }}</b></p>
-                </div>
-                <div>
-                    <small class="text-muted">Catégorie</small>
-                    <p><b>{{ $paiement->categorieVehicule->libelle ?? 'N/A' }}</b></p>
-                </div>
-                <div>
-                    <small class="text-muted">Mode de paiement</small>
-                    <p><b>{{ $paiement->typePaiement->libelle ?? 'N/A' }}</b></p>
-                </div>
-                <div>
-                    <small class="text-muted">Agent</small>
-                    <p><b>{{ $paiement->user->prenoms ?? 'N/A' }}</b></p>
-                </div>
-            </div>
+    .receipt-header {
+        text-align: center;
+        border-bottom: 2px dashed #eee;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
 
-            <div style="margin-top: 3rem; background: var(--color-background); padding: 1.5rem; border-radius: var(--border-radius-1); text-align: center;">
-                <small class="text-muted">MONTANT TOTAL PAYÉ</small>
-                <h1 style="font-size: 2.5rem; color: var(--color-dark);">{{ number_format($paiement->montant, 0, ',', ' ') }} F CFA</h1>
-            </div>
+    .receipt-header h2 {
+        margin: 0;
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+    }
 
-            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
-                <button onclick="window.print()" class="btn-submit" style="background: var(--color-dark); display: flex; align-items: center; gap: 0.5rem;">
-                    <span class="material-icons-sharp">print</span> Imprimer
-                </button>
-                <a href="{{ route('admin.paiements.index') }}" style="padding: 0.8rem 2rem; border-radius: var(--border-radius-1); text-decoration: none; color: var(--color-dark); border: 2px solid var(--color-info-light); display: inline-flex; align-items: center;">Retour</a>
-            </div>
-        </div>
+    .receipt-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    .receipt-footer {
+        text-align: center;
+        border-top: 2px dashed #eee;
+        padding-top: 1rem;
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .barcode {
+        height: 60px;
+        width: 100%;
+        background: repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 4px);
+        margin: 1rem 0;
+    }
+
+    .total-box {
+        background: #000;
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+        margin: 1.5rem 0;
+        border-radius: var(--border-radius-1);
+    }
+</style>
+
+<div class="receipt-card">
+    <div class="receipt-header">
+        <img src="{{ asset('images/pngwing.com.png') }}" alt="Logo" style="width: 50px; margin-bottom: 0.5rem;">
+        <h2>AUTOROUTE CI</h2>
+        <p>SOCIÉTÉ DE GESTION DU PÉAGE</p>
+        <p>GUICHET : <strong>{{ $paiement->guichet->code ?? 'N/A' }}</strong></p>
     </div>
+
+    <div class="receipt-body">
+        <div class="receipt-row">
+            <span>TICKET N°:</span>
+            <strong>#{{ str_pad($paiement->id, 8, '0', STR_PAD_LEFT) }}</strong>
+        </div>
+        <div class="receipt-row">
+            <span>DATE:</span>
+            <strong>{{ \Carbon\Carbon::parse($paiement->date_paiement)->format('d/m/Y H:i') }}</strong>
+        </div>
+        <div class="receipt-row">
+            <span>CLASSE:</span>
+            <strong>{{ $paiement->categorieVehicule->libelle ?? 'N/A' }}</strong>
+        </div>
+        <div class="receipt-row">
+            <span>MATRICULE:</span>
+            <strong>{{ $paiement->immatriculation ?? '---' }}</strong>
+        </div>
+        <div class="receipt-row">
+            <span>MODE PAIEMENT:</span>
+            <strong>{{ $paiement->typePaiement->libelle ?? 'ESPÈCES' }}</strong>
+        </div>
+        <div class="receipt-row">
+            <span>AGENT:</span>
+            <strong>{{ strtoupper($paiement->user->nom ?? 'ADMIN') }}</strong>
+        </div>
+
+        <div class="total-box">
+            <p style="margin-bottom: 0.2rem; font-size: 0.8rem; opacity: 0.8;">TOTAL PAYÉ</p>
+            <h1 style="margin: 0; font-size: 2rem;">{{ number_format($paiement->montant, 0, ',', ' ') }} FCFA</h1>
+        </div>
+
+        <div class="barcode"></div>
+    </div>
+
+    <div class="receipt-footer">
+        <p>MERCI DE VOTRE PASSAGE</p>
+        <p>BONNE ROUTE ET SOYEZ PRUDENT</p>
+        <p style="margin-top: 0.5rem; font-size: 0.7rem;">SGP - SYSTEM V1.0</p>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 2rem;" class="btn-no-print">
+    <button onclick="window.print()" class="btn-submit" style="background: var(--color-dark); width: auto; padding: 1rem 3rem;">
+        <span class="material-icons-sharp">print</span> Imprimer le ticket
+    </button>
+    <a href="{{ route('admin.paiements.create') }}" style="margin-left: 1rem; color: var(--color-light); font-weight: 600;">Nouveau passage</a>
+</div>
+
+@if(session('print'))
+<script>
+    window.onload = function() {
+        window.print();
+        // Optionnel : rediriger après impression
+        // setTimeout(function() { window.location.href = "{{ route('admin.paiements.create') }}"; }, 2000);
+    }
+</script>
+@endif
+
 @endsection

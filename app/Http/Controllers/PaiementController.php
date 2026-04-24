@@ -7,6 +7,7 @@ use App\Models\CategorieVehicule;
 use App\Models\TypePaiement;
 use App\Models\Guichet;
 use App\Models\User;
+use App\Models\Tarif;
 use Illuminate\Http\Request;
 
 class PaiementController extends Controller
@@ -29,7 +30,11 @@ class PaiementController extends Controller
         $types = TypePaiement::all();
         $guichets = Guichet::all();
         $users = User::all();
-        return view('admin.paiements.create', compact('categories', 'types', 'guichets', 'users'));
+        
+        // Récupérer les tarifs actuels (ceux sans date de fin ou les plus récents)
+        $tarifs = Tarif::whereNull('date_fin')->orWhere('date_fin', '>', now())->get();
+        
+        return view('admin.paiements.create', compact('categories', 'types', 'guichets', 'users', 'tarifs'));
     }
 
     /**
@@ -46,25 +51,13 @@ class PaiementController extends Controller
             'guichet_id' => 'required|exists:guichet,id',
             'user_id' => 'required|exists:user,id',
             'statut' => 'nullable|string|max:50',
-        ], [
-            'montant.required' => 'Le montant est obligatoire.',
-            'montant.numeric' => 'Le montant doit être un nombre.',
-            'montant.min' => 'Le montant doit être au moins 0.',
-            'categorie_vehicule_id.required' => 'La catégorie de véhicule est obligatoire.',
-            'categorie_vehicule_id.exists' => 'La catégorie sélectionnée est invalide.',
-            'type_paiement_id.required' => 'Le type de paiement est obligatoire.',
-            'type_paiement_id.exists' => 'Le type de paiement sélectionné est invalide.',
-            'guichet_id.required' => 'Le guichet est obligatoire.',
-            'guichet_id.exists' => 'Le guichet sélectionné est invalide.',
-            'user_id.required' => 'L’utilisateur est obligatoire.',
-            'user_id.exists' => 'L’utilisateur sélectionné est invalide.',
-            'date_paiement.date' => 'La date de paiement doit être une date valide.',
         ]);
 
-        Paiement::create($request->all());
+        $paiement = Paiement::create($request->all());
 
-        return redirect()->route('admin.paiements.index')
-            ->with('success', 'Paiement enregistré avec succès.');
+        return redirect()->route('admin.paiements.show', $paiement->id)
+            ->with('success', 'Paiement enregistré avec succès.')
+            ->with('print', true);
     }
 
     /**
@@ -86,7 +79,8 @@ class PaiementController extends Controller
         $types = TypePaiement::all();
         $guichets = Guichet::all();
         $users = User::all();
-        return view('admin.paiements.edit', compact('paiement', 'categories', 'types', 'guichets', 'users'));
+        $tarifs = Tarif::whereNull('date_fin')->orWhere('date_fin', '>', now())->get();
+        return view('admin.paiements.edit', compact('paiement', 'categories', 'types', 'guichets', 'users', 'tarifs'));
     }
 
     /**
