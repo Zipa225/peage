@@ -9,6 +9,15 @@
 @section('content')
     <div class="passages-recents form-centered" style="margin-top: 1rem;">
         <div style="background: var(--color-white); padding: var(--card-padding); border-radius: var(--card-border-radius); box-shadow: var(--box-shadow);">
+
+            {{-- Info session liée --}}
+            @if($paiement->sessionGuichet)
+                <div style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25); border-radius: 8px; padding: 0.7rem 1rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--color-dark-variant);">
+                    <span class="material-icons-sharp" style="font-size: 1rem; vertical-align: middle; color: #10b981;">info</span>
+                    Paiement rattaché à la session du guichet <strong>{{ $paiement->sessionGuichet->guichet?->code ?? '—' }}</strong>
+                </div>
+            @endif
+
             <form action="{{ route('admin.paiements.update', $paiement->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -38,24 +47,6 @@
                         <select name="type_paiement_id" required style="width: 100%; padding: 0.8rem; border-radius: var(--border-radius-1); border: 2px solid var(--color-info-light); background: var(--color-primary); color: var(--color-dark);">
                             @foreach($types as $type)
                                 <option value="{{ $type->id }}" {{ $paiement->type_paiement_id == $type->id ? 'selected' : '' }}>{{ $type->libelle }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Guichet</label>
-                        <select name="guichet_id" required style="width: 100%; padding: 0.8rem; border-radius: var(--border-radius-1); border: 2px solid var(--color-info-light); background: var(--color-primary); color: var(--color-dark);">
-                            @foreach($guichets as $g)
-                                <option value="{{ $g->id }}" {{ $paiement->guichet_id == $g->id ? 'selected' : '' }}>{{ $g->code }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Agent</label>
-                        <select name="user_id" required style="width: 100%; padding: 0.8rem; border-radius: var(--border-radius-1); border: 2px solid var(--color-info-light); background: var(--color-primary); color: var(--color-dark);">
-                            @foreach($users as $u)
-                                <option value="{{ $u->id }}" {{ $paiement->user_id == $u->id ? 'selected' : '' }}>{{ $u->prenoms }}</option>
                             @endforeach
                         </select>
                     </div>

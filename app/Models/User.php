@@ -43,9 +43,22 @@ class User extends Authenticatable
         ];
     }
 
-    public function paiements()
+    /**
+     * L'agent a plusieurs sessions guichet.
+     */
+    public function sessionGuichets()
     {
-        return $this->hasMany(Paiement::class, 'user_id');
+        return $this->hasMany(SessionGuichet::class, 'user_id');
+    }
+
+    /**
+     * Session guichet active de l'agent (s'il y en a une).
+     */
+    public function sessionGuichetActive()
+    {
+        return $this->hasOne(SessionGuichet::class, 'user_id')
+            ->where('statut', 'ouverte')
+            ->latest();
     }
 
     /**

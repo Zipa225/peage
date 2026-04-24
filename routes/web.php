@@ -11,6 +11,7 @@ use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\TarifController;
 use App\Http\Controllers\TypePaiementController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SessionGuichetController;
 
 // =============================================
 // ROUTES AUTHENTIFICATION (publiques)
@@ -35,16 +36,30 @@ Route::get('/', function () {
 // =============================================
 // ROUTES BACKEND (protégées par auth)
 // =============================================
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    // CRUD Resources
+    // =============================================
+    // ROUTES SESSION GUICHET
+    // =============================================
+    Route::get('/session/ouvrir', [SessionGuichetController::class, 'showOuvrir'])->name('session.ouvrir');
+    Route::post('/session/ouvrir', [SessionGuichetController::class, 'ouvrir'])->name('session.store');
+    Route::post('/session/fermer', [SessionGuichetController::class, 'fermer'])->name('session.fermer');
+    Route::get('/session/active', [SessionGuichetController::class, 'sessionActive'])->name('session.active');
+
+    // =============================================
+    // CRUD PAIEMENTS — protégés par SessionGuichetActive
+    // =============================================
+    Route::resource('paiements', PaiementController::class)->middleware('session.guichet');
+
+    // =============================================
+    // CRUD RESOURCES (Administration)
+    // =============================================
     Route::resource('users', UserController::class);
     Route::resource('categories-vehicules', CategorieVehiculeController::class);
     Route::resource('guichets', GuichetController::class);
-    Route::resource('paiements', PaiementController::class);
     Route::resource('tarifs', TarifController::class);
     Route::resource('types-paiements', TypePaiementController::class);
 

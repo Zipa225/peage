@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $totalCategories = CategorieVehicule::count();
 
-        $passagesRecents = Paiement::with(['categorieVehicule', 'guichet', 'typePaiement', 'user'])
+        $passagesRecents = Paiement::with(['categorieVehicule', 'sessionGuichet.guichet', 'typePaiement', 'sessionGuichet.user'])
             ->latest('date_paiement')
             ->take(10)
             ->get();

@@ -33,7 +33,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard'));
+            // Rediriger vers l'ouverture de session guichet (workflow métier)
+            return redirect()->intended(route('admin.session.ouvrir'));
         }
 
         return back()->withErrors([

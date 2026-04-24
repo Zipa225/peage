@@ -89,6 +89,33 @@
                     @yield('page-title')
                 </div>
                 <div class="header-right">
+                    {{-- BARRE DE STATUT SESSION GUICHET --}}
+                    @php
+                        $sessionId = session('session_guichet_id');
+                        $sessionActive = null;
+                        if ($sessionId) {
+                            $sessionActive = \App\Models\SessionGuichet::with(['guichet', 'user'])
+                                ->where('id', $sessionId)
+                                ->where('statut', 'ouverte')
+                                ->first();
+                        }
+                    @endphp
+                    @if($sessionActive)
+                        <div class="session-status-bar">
+                            <span class="material-icons-sharp" style="color: #10b981; font-size: 1rem;">point_of_sale</span>
+                            <span class="session-label">{{ $sessionActive->guichet->code }}</span>
+                            <span class="session-sep">|</span>
+                            <span class="material-icons-sharp" style="color: #a78bfa; font-size: 1rem;">person</span>
+                            <span class="session-label">{{ $sessionActive->user->prenoms }} {{ $sessionActive->user->nom }}</span>
+                            <form action="{{ route('admin.session.fermer') }}" method="POST" style="display: inline;" onsubmit="return confirm('Fermer la session et voir le récapitulatif ?')">
+                                @csrf
+                                <button type="submit" class="btn-fermer-session">
+                                    <span class="material-icons-sharp" style="font-size: 1rem;">lock</span>
+                                    Fermer la session
+                                </button>
+                            </form>
+                        </div>
+                    @endif
                     <div class="theme-toggler">
                         <span class="material-icons-sharp active">light_mode</span>
                         <span class="material-icons-sharp">dark_mode</span>
@@ -113,6 +140,20 @@
                 <div class="alert alert-success">
                     <span class="material-icons-sharp">check_circle</span>
                     {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('info'))
+                <div class="alert" style="background: var(--color-info-dark); color: white;">
+                    <span class="material-icons-sharp">info</span>
+                    {{ session('info') }}
+                </div>
+            @endif
+
+            @if(session('warning'))
+                <div class="alert" style="background: #f59e0b; color: white;">
+                    <span class="material-icons-sharp">warning</span>
+                    {{ session('warning') }}
                 </div>
             @endif
 
@@ -143,6 +184,49 @@
     </div>
 
     {{-- ===== SCRIPTS ===== --}}
+    <style>
+        /* Barre de statut session guichet */
+        .session-status-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            padding: 0.35rem 0.8rem;
+            font-size: 0.82rem;
+            color: var(--color-dark);
+        }
+        .session-status-bar .session-label {
+            font-weight: 600;
+            font-size: 0.82rem;
+        }
+        .session-status-bar .session-sep {
+            color: rgba(0,0,0,0.25);
+        }
+        .btn-fermer-session {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 0.4rem;
+            transition: background 0.2s;
+        }
+        .btn-fermer-session:hover { background: #dc2626; }
+        body.dark_theme-variable .session-status-bar {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.4);
+            color: #d1fae5;
+        }
+        body.dark_theme-variable .session-status-bar .session-sep { color: rgba(255,255,255,0.3); }
+    </style>
     <script>
         const sideMenu = document.querySelector("aside");
         const menuBtn = document.querySelector("#menu-btn");

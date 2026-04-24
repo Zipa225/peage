@@ -35,8 +35,8 @@
                     <td class="warning">{{ $paiement->immatriculation ?? 'N/A' }}</td>
                     <td>{{ $paiement->categorieVehicule->libelle ?? '—' }}</td>
                     <td><b>{{ number_format($paiement->montant, 0, ',', ' ') }} F</b></td>
-                    <td>{{ $paiement->guichet->code ?? '—' }}</td>
-                    <td>{{ $paiement->user->prenoms ?? '—' }}</td>
+                    <td>{{ $paiement->sessionGuichet?->guichet?->code ?? '—' }}</td>
+                    <td>{{ $paiement->sessionGuichet?->user?->prenoms ?? '—' }}</td>
                     <td>
                         <a href="{{ route('admin.paiements.show', $paiement->id) }}"><span class="material-icons-sharp" style="color: var(--color-light);">visibility</span></a>
                     </td>

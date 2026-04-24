@@ -13,8 +13,7 @@ class Paiement extends Model
         'immatriculation',
         'categorie_vehicule_id',
         'type_paiement_id',
-        'guichet_id',
-        'user_id',
+        'session_guichet_id',
         'statut'
     ];
 
@@ -28,13 +27,27 @@ class Paiement extends Model
         return $this->belongsTo(TypePaiement::class, 'type_paiement_id');
     }
 
-    public function guichet()
+    /**
+     * La session guichet à laquelle ce paiement est rattaché.
+     */
+    public function sessionGuichet()
     {
-        return $this->belongsTo(Guichet::class, 'guichet_id');
+        return $this->belongsTo(SessionGuichet::class, 'session_guichet_id');
     }
 
-    public function user()
+    /**
+     * Accès au guichet via la session (raccourci).
+     */
+    public function getGuichetAttribute()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->sessionGuichet?->guichet;
+    }
+
+    /**
+     * Accès à l'agent via la session (raccourci).
+     */
+    public function getUserAttribute()
+    {
+        return $this->sessionGuichet?->user;
     }
 }

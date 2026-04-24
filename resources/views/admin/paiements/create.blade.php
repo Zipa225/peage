@@ -7,6 +7,19 @@
 @endsection
 
 @section('content')
+    {{-- Barre de contexte session active --}}
+    @if($sessionActive)
+        <div style="background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(102,126,234,0.1)); border: 1px solid rgba(16,185,129,0.3); border-radius: 10px; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <span class="material-icons-sharp" style="color: #10b981;">point_of_sale</span>
+            <span style="font-weight: 600;">{{ $sessionActive->guichet->code }}</span>
+            <span style="color: var(--color-dark-variant);">|</span>
+            <span class="material-icons-sharp" style="color: #a78bfa; font-size: 1rem;">person</span>
+            <span>Agent : <strong>{{ $sessionActive->user->prenoms }} {{ $sessionActive->user->nom }}</strong></span>
+            <span style="color: var(--color-dark-variant);">|</span>
+            <span style="color: var(--color-dark-variant); font-size: 0.85rem;">Session ouverte le {{ \Carbon\Carbon::parse($sessionActive->date_ouverture)->format('d/m/Y à H:i') }}</span>
+        </div>
+    @endif
+
     <div class="passages-recents form-centered" style="margin-top: 1rem;">
         <div style="background: var(--color-white); padding: var(--card-padding); border-radius: var(--card-border-radius); box-shadow: var(--box-shadow);">
             <form action="{{ route('admin.paiements.store') }}" method="POST" id="paiement-form">
@@ -42,16 +55,6 @@
                         </select>
                     </div>
 
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Guichet</label>
-                        <select name="guichet_id" required style="width: 100%; padding: 0.8rem; border-radius: var(--border-radius-1); border: 2px solid var(--color-info-light); background: var(--color-primary); color: var(--color-dark);">
-                            @foreach($guichets as $g)
-                                <option value="{{ $g->id }}">{{ $g->code }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                     <input type="hidden" name="date_paiement" value="{{ now() }}">
                 </div>
 
@@ -81,7 +84,6 @@
             }
         });
 
-        // Debug au cas où
         document.getElementById('paiement-form').onsubmit = function() {
             if (!montantInput.value) {
                 alert("Veuillez sélectionner une catégorie pour obtenir le prix.");

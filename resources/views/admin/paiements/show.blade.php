@@ -90,7 +90,7 @@
         <img src="{{ asset('images/pngwing.com.png') }}" alt="Logo" style="width: 50px; margin-bottom: 0.5rem;">
         <h2>AUTOROUTE CI</h2>
         <p>SOCIÉTÉ DE GESTION DU PÉAGE</p>
-        <p>GUICHET : <strong>{{ $paiement->guichet->code ?? 'N/A' }}</strong></p>
+        <p>GUICHET : <strong>{{ $paiement->sessionGuichet?->guichet?->code ?? 'N/A' }}</strong></p>
     </div>
 
     <div class="receipt-body">
@@ -116,7 +116,7 @@
         </div>
         <div class="receipt-row">
             <span>AGENT:</span>
-            <strong>{{ strtoupper($paiement->user->nom ?? 'ADMIN') }}</strong>
+            <strong>{{ strtoupper($paiement->sessionGuichet?->user?->nom ?? 'ADMIN') }}</strong>
         </div>
 
         <div class="total-box">
@@ -143,12 +143,9 @@
 
 @if(session('print') || request('print'))
 <script>
-    
     setTimeout(function() {
         window.print();
     }, 500);
-
-    
 </script>
 @endif
 
